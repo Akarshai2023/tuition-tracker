@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Class Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f4f6f9;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        select, input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            margin-top: 15px;
+            width: 100%;
+            padding: 10px;
+            background: #007BFF;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .download-btn {
+            margin: 20px auto;
+            display: block;
+            max-width: 200px;
+            text-align: center;
+            background: #28a745;
+            padding: 12px;
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+        }
+        .download-btn:hover {
+            background: #1e7e34;
+        }
+        table {
+            margin: 30px auto;
+            border-collapse: collapse;
+            width: 90%;
+            background: white;
+            box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+        th {
+            background: #007BFF;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Class Registration</h1>
+
+    <form method="POST" action="/">
+        <!-- Name Dropdown -->
+        <label for="name">Name:</label>
+        <select name="name" required>
+            <option value="" disabled selected>Select a student</option>
+            {% for student in names %}
+                <option value="{{ student }}">{{ student }}</option>
+            {% endfor %}
+        </select>
+
+        <!-- Date Picker -->
+        <label for="date">Date:</label>
+        <input type="date" name="date" required>
+
+        <!-- Hours Dropdown -->
+        <label for="hours">Hours:</label>
+        <select name="hours" required>
+            <option value="" disabled selected>Select hours</option>
+            {% for h in hours %}
+                <option value="{{ h }}">{{ h }}</option>
+            {% endfor %}
+        </select>
+
+        <!-- Price Dropdown -->
+        <label for="price">Price per Hour:</label>
+        <select name="price" required>
+            <option value="" disabled selected>Select price</option>
+            {% for p in prices %}
+                <option value="{{ p }}">{{ p }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- ✅ Download CSV button -->
+    <a class="download-btn" href="/download">⬇️ Download CSV</a>
+
+    {% if data %}
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Hours</th>
+            <th>Price per Hour</th>
+            <th>Total</th>
+        </tr>
+        {% for row in data %}
+        <tr>
+            <td>{{ row['Name'] }}</td>
+            <td>{{ row['Date'] }}</td>
+            <td>{{ row['Hours'] }}</td>
+            <td>{{ row['Price_per_Hour'] }}</td>
+            <td>{{ row['Total'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+</body>
+</html>
